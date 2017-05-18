@@ -1,0 +1,28 @@
+<div ng-controller="ShoppingCartController">
+	<div> <span>SEPETİM<span></span><span style="float:right;"><button class="btn btn-xs" ng-click="emptyShoppingCart()"><span class="glyphicon glyphicon-trash"></span></button></span></div>
+	<div ng-show="hasItems()">
+		<table class="table">
+				<tbody>
+					<tr ng-repeat="shoppingItem in shoppingCart.items">
+						<td>{{shoppingItem.description}}</td>
+						<td>{{shoppingItem.quantity}}</td>
+						<td>{{shoppingItem.totalPrice/100.0|currency}}</td>
+						<td><button class="btn btn-xs" ng-click="removeShoppingItem(shoppingItem.key)"><span class="glyphicon glyphicon-remove"></span></button><td>
+					</tr>
+					<tr>
+						<td>TOPLAM</td>
+						<td></td>
+						<td>{{shoppingCart.totalPrice/100.0 | currency}}</td>
+						<td></td>
+					</tr>
+				</tbody>
+		</table>
+		<div>
+    		<button type="button" class="btn btn-success" ng-click="confirmShoppingCart()">Sepeti Onayla</button>
+		</div>
+	</div>
+	
+	<div ng-hide="hasItems()">
+		Sepetinizde hiç ürün bulunmuyor.
+	</div>	 	
+</div>

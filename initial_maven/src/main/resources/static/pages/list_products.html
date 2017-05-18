@@ -1,0 +1,17 @@
+<div ng-controller="ListProductsController">
+		
+		<div ng-include="'pages/shopping_cart.html'" class="shoppingCart"></div>
+		
+		<div cg-busy="{promise:getBeveragesPromise,message:'Loading'}" class ="itemList">
+			<div><h1>MENÜ</h1></div>
+			<table class="table">
+				<tbody>
+					<tr ng-repeat="beverage in beverages">
+					<td><button type="button" class="btn btn-success" ng-click="addProduct(beverage)"><span class="glyphicon glyphicon-plus"></span></button></td>
+					<td>{{beverage.name}}</td>
+					<td>{{beverage.price/100.0 | currency}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+</div>

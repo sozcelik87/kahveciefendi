@@ -1,0 +1,5 @@
+{
+"LOGIN" :"Giriş",
+"LOGIN_ERROR_TITLE": "Login Hatası",
+"LOGIN_ERROR_TEXT" : "Kullanıcı adı veya şifre geçersiz"
+}
