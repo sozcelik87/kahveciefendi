@@ -14,15 +14,19 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.dto.AuthRequestDTO;
+import com.example.dto.LoginDTO;
+import com.example.dto.RegisterDTO;
+import com.example.domain.Customer;
 import com.example.dto.JWTTokenDTO;
 import com.example.security.JWTConfigurer;
 import com.example.security.TokenProvider;
+import com.example.service.CustomerService;
 
 
 @RestController
@@ -36,19 +40,25 @@ public class AuthenticationController {
     
     @Autowired
     private AuthenticationManager authenticationManager;
+    
+    @Autowired
+    private CustomerService customerService;
+    
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     
     @RequestMapping(value = "/signin",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<?> authenticationRequest(@RequestBody AuthRequestDTO authenticationRequest, HttpServletResponse response) {
+    public ResponseEntity<?> signIn(@RequestBody LoginDTO authenticationRequest, HttpServletResponse response) {
 
 
         try {
             Authentication authentication = this.authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            authenticationRequest.getUsername(),
+                            authenticationRequest.getEmail(),
                             authenticationRequest.getPassword()
                     )
             );
@@ -61,18 +71,32 @@ public class AuthenticationController {
         }
 
     }
+    
+    @RequestMapping(value = "/register",
+            method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<?> register(@RequestBody RegisterDTO registerDTO,HttpServletResponse response) {
 
-    /**
-     * GET  /users : get all the users which are on sale.
-     *
-     * @return the ResponseEntity with status 200 (OK) and the list of users in body
-     * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
-     */
-//    @RequestMapping(value = "/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-//    @Timed
-//    public List<User> getUsers() throws URISyntaxException {
-//        log.debug("REST request to get a list of users");
-//        //return userService.findAll();
-//    }
+
+        try {
+        	
+        	customerService.registerCustomer(registerDTO);
+        	
+            Authentication authentication = this.authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            registerDTO.getEmail(),
+                            registerDTO.getPassword()
+                    )
+            );
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            String jwt = tokenProvider.createToken(authentication, false);
+            response.addHeader(JWTConfigurer.AUTHORIZATION_HEADER, "Bearer " + jwt);
+            return ResponseEntity.ok(new JWTTokenDTO(jwt));
+        } catch (Exception exception) {
+            return new ResponseEntity<>(Collections.singletonMap("AuthenticationException", exception.getLocalizedMessage()), HttpStatus.UNAUTHORIZED);
+        }
+
+    }
 
 }
