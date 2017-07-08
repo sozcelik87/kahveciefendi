@@ -1,21 +1,20 @@
 package com.example.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class JWTTokenDTO {
 
-    private String idToken;
+    private String token;
 
-    public JWTTokenDTO(String idToken) {
-        this.idToken = idToken;
-    }
+	public JWTTokenDTO(String token) {
+		this.token = token;
+	}
 
-    @JsonProperty("id_token")
-    public String getIdToken() {
-        return idToken;
-    }
+	public String getToken() {
+		return token;
+	}
 
-    public void setIdToken(String idToken) {
-        this.idToken = idToken;
-    }
+	public void setToken(String token) {
+		this.token = token;
+	}
+    
+    
 }

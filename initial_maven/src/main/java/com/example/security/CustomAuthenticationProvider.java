@@ -13,7 +13,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -46,7 +45,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		
 		if(passwordEncoder.matches(password,customer.getPassword())){
 			List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
-			grantedAuthorities.add(new SimpleGrantedAuthority(AuthoritiesConstants.USER));
+			//grantedAuthorities.add(new SimpleGrantedAuthority(AuthoritiesConstants.USER));
 			return new UsernamePasswordAuthenticationToken(email, password, grantedAuthorities);
 		}else{
 			throw new BadCredentialsException("Wrong password");

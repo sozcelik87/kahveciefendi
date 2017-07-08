@@ -1,0 +1,37 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Adres Ekleme</h4>
+</div>
+
+<div class="modal-body">
+		<form class="form-horizontal" role="form" name="form">
+        <div class="form-group">
+            <label for="addressTitle" class="col-sm-2 control-label">Adres Başlığı</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="addressTitle" name="addressTitle" ng-model="address.title" required></input>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="phoneNumber" class="col-sm-2 control-label">Telefon No</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" ng-model="address.phone" required></input>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="address" class="col-sm-2 control-label">Adres</label>
+            <div class="col-sm-10">
+                <textarea  class="form-control" id="address" name="address" ng-model="address.address" required></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="addressDetail" class="col-sm-2 control-label">Adres Tarifi</label>
+            <div class="col-sm-10">
+                <textarea type="text" class="form-control" id="addressDetail" name="addressDetail" ng-model="address.addressDetail" required></textarea>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-success" ng-click="saveAddress()">Kaydet</button>
+</div>

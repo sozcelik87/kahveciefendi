@@ -22,10 +22,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-
-/**
- * Created by atifcan.
- */
 @Component
 public class TokenProvider {
 
@@ -40,14 +36,14 @@ public class TokenProvider {
     private long tokenValidityInSecondsForRememberMe;
 
     @Autowired
-    private ApplicationProperties adminPanelProperties;
+    private ApplicationProperties applicationProperties;
 
     @PostConstruct
     public void init() {
         this.secretKey =
-                adminPanelProperties.getJwt().getKey();
+                applicationProperties.getJwt().getKey();
 
-        this.tokenValidityInSeconds =   1000 * adminPanelProperties.getJwt().getExpiration();
+        this.tokenValidityInSeconds =   1000 * applicationProperties.getJwt().getExpiration();
         //this.tokenValidityInSecondsForRememberMe =  1000 * adminPanelProperties.getJwt().getTokenValidityInSecondsForRememberMe();
     }
 

@@ -54,12 +54,16 @@ public class ShoppingCartItem implements Serializable {
 	}
 	
 	public Long getTotalPrice(){
-		Long totalPrice = beverage.getPrice();
+		
+		return getUnitPrice()*quantity;
+	}
+	
+	public Long getUnitPrice(){
+		Long unitPrice = beverage.getPrice();
 		for(Addition addition : additions){
-			totalPrice+=addition.getPrice();
+			unitPrice+=addition.getPrice();
 		}
-		totalPrice=totalPrice*quantity;
-		return totalPrice;
+		return unitPrice;
 	}
 	
 	public String getDescription(){

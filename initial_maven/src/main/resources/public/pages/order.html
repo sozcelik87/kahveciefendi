@@ -1,0 +1,67 @@
+<div ng-controller="OrderController">
+	<div class="orders">
+		<table class="table">
+				
+				<thead>
+					<tr>
+						<td>İÇECEK</td>
+						<td>FiYAT</td>
+						<td>ADET</td>
+						<td>TUTAR</td>
+					</tr>
+				</thead>
+				<tbody>		
+					<tr ng-repeat="shoppingItem in shoppingCart.items">
+						<td>{{shoppingItem.description}}</td>
+						<td>{{shoppingItem.unitPrice/100.0|currency}}</td>
+						<td>{{shoppingItem.quantity}}</td>
+						<td>{{shoppingItem.totalPrice/100.0|currency}}</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>TOPLAM TUTAR</td>
+						<td></td>
+						<td>{{shoppingCart.totalPrice/100.0 | currency}}</td>
+					</tr>		
+					<tr>
+						<td></td>
+						<td>İNDİRİM TUTARI</td>
+						<td></td>
+						<td>{{shoppingCart.discount/100.0 | currency}}</td>
+						
+					</tr>
+					<tr>
+						<td></td> 	
+						<td>ÖDENECEK TUTAR</td>
+						<td></td>
+						<td>{{shoppingCart.discountedPrice/100.0 | currency}}</td>
+					</tr>
+				</tbody>
+		</table>
+	</div>
+	
+	
+	<div class="addresses" style="margin-top:50px;margin-left:50px;">
+		<div>
+			<span>Siparişin Teslim Edileceği Adress </span> <button class="btn btn-success" ng-click="addAddress()"><span class="glyphicon glyphicon-plus"></span> Ekle</button>
+		</div>
+		<div ng-repeat="address in addresses">
+			<div><input type="radio" name="address" ng-model="order.deliveryAddressId" value="{{address.id}}"><h2>{{address.title}}</h2></div>
+			<div>{{address.address}}</div>
+			<div>{{address.addressDetail}}</div>
+		</div>
+	</div>
+
+	
+	<div class="paymentTypes" style="margin-top:50px;margin-left:50px;">
+	<div><span>Ödeme Şekli</span></div>
+		<div ng-repeat="paymentType in paymentTypes">
+			<div><input type="radio" name="paymentType" ng-model="order.paymentTypeId" value="{{paymentType.id}}"><span>{{paymentType.name}}</span></div>
+		</div>
+	</div>
+	
+	<div style="margin-top:50px;margin-left:50px;">
+		<button type="button" class="btn btn-success" ng-click="completeOrder()">Sipariş Ver</button>
+	</div>
+	
+</div>

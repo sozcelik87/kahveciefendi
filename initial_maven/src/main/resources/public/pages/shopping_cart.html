@@ -1,0 +1,47 @@
+<div ng-controller="ShoppingCartController">
+	<div> <span>SEPETİM<span></span></div>
+	<div ng-show="hasItems()">
+		<table class="table">
+				<tbody>
+					<tr>
+						<td>İÇECEK</td>
+						<td>FiYAT</td>
+						<td>ADET</td>
+						<td>TUTAR</td>
+					</tr>
+					<tr ng-repeat="shoppingItem in shoppingCart.items">
+						<td>{{shoppingItem.description}}</td>
+						<td>{{shoppingItem.unitPrice/100.0|currency}}</td>
+						<td>{{shoppingItem.quantity}}</td>
+						<td>{{shoppingItem.totalPrice/100.0|currency}}</td>
+					<tr>
+						<td></td>
+						<td>TOPLAM TUTAR</td>
+						<td></td>
+						<td>{{shoppingCart.totalPrice/100.0 | currency}}</td>
+					</tr>		
+					<tr>
+						<td></td>
+						<td>İNDİRİM TUTARI</td>
+						<td></td>
+						<td>{{shoppingCart.discount/100.0 | currency}}</td>
+						
+					</tr>
+					<tr>
+						<td></td> 	
+						<td>ÖDENECEK TUTAR</td>
+						<td></td>
+						<td>{{shoppingCart.discountedPrice/100.0 | currency}}</td>
+					</tr>
+				</tbody>
+		</table>
+		<div>
+    		<button type="button" class="btn btn-success" ng-click="confirmShoppingCart()">Sepeti Onayla</button>
+    		<button type="button" class="btn btn-danger" ng-click="emptyShoppingCart()">Sepeti Temizle</button>
+		</div>
+	</div>
+	
+	<div ng-hide="hasItems()">
+		Sepetinizde hiç ürün bulunmuyor.
+	</div>	 	
+</div>

@@ -31,4 +31,34 @@ public class ShoppingCart {
 		}
 		return totalPrice;
 	}
+	
+	public Long getDiscount(){
+		Long discount =0L;
+		
+		Long totalPrice = getTotalPrice();
+		
+		if(totalPrice>1200){
+			discount = getTotalPrice()/4; // %25 discount;
+		}
+		
+		// 3 or more beverage
+		int totalItemCount =0;
+		Long cheapestItemPrice =null;
+		for(ShoppingCartItem item :items){
+			totalItemCount+=item.getQuantity();
+			if(cheapestItemPrice == null || item.getUnitPrice()<cheapestItemPrice){
+				cheapestItemPrice = item.getUnitPrice();
+			}
+		}
+		
+		if(totalItemCount>=3&&cheapestItemPrice>discount){
+			discount =cheapestItemPrice;
+		}
+		
+		return discount;
+	}
+	
+	public Long getDiscountedPrice(){
+		return getTotalPrice()-getDiscount();
+	}
 }

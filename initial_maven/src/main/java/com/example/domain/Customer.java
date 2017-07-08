@@ -1,10 +1,15 @@
 package com.example.domain;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -27,7 +32,10 @@ public class Customer {
 	
 	@Column(name="PASSWORD")
     private String password;
-
+	
+	@OneToMany(mappedBy="customer",targetEntity=Address.class,fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	private List<Address> addresses;  
+	
 	public Long getId() {
 		return id;
 	}
@@ -67,4 +75,12 @@ public class Customer {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	public List<Address> getAddresses() {
+		return addresses;
+	}
+
+	public void setAddresses(List<Address> addresses) {
+		this.addresses = addresses;
+	}	
 }

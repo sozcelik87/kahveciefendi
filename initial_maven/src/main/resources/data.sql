@@ -16,3 +16,9 @@ insert into BEVERAGE_ADDITION_MAP(BEVERAGE_ID,ADDITION_ID) values (3,7);
 insert into BEVERAGE_ADDITION_MAP(BEVERAGE_ID,ADDITION_ID) values (3,8);
 insert into BEVERAGE_ADDITION_MAP(BEVERAGE_ID,ADDITION_ID) values (4,9);
 insert into BEVERAGE_ADDITION_MAP(BEVERAGE_ID,ADDITION_ID) values (5,6);
+
+insert into PAYMENT_TYPE(ID,NAME) values(1,'Nakit');
+insert into PAYMENT_TYPE(ID,NAME) values(2,'Kredi Kartı');
+insert into PAYMENT_TYPE(ID,NAME) values(3,'Sodexo');
+insert into PAYMENT_TYPE(ID,NAME) values(4,'Multinet');
+insert into PAYMENT_TYPE(ID,NAME) values(5,'SetCard');

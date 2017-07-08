@@ -2,8 +2,6 @@ package com.example.controller;
 
 import java.util.Collections;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.dto.JWTTokenDTO;
 import com.example.dto.LoginDTO;
 import com.example.dto.RegisterDTO;
-import com.example.domain.Customer;
-import com.example.dto.JWTTokenDTO;
-import com.example.security.JWTConfigurer;
 import com.example.security.TokenProvider;
 import com.example.service.CustomerService;
 
@@ -48,11 +44,11 @@ public class AuthenticationController {
     PasswordEncoder passwordEncoder;
 
     
-    @RequestMapping(value = "/signin",
+    @RequestMapping(value = "/login",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<?> signIn(@RequestBody LoginDTO authenticationRequest, HttpServletResponse response) {
+    public ResponseEntity<?> login(@RequestBody LoginDTO authenticationRequest) {
 
 
         try {
@@ -63,11 +59,10 @@ public class AuthenticationController {
                     )
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            String jwt = tokenProvider.createToken(authentication, false);
-            response.addHeader(JWTConfigurer.AUTHORIZATION_HEADER, "Bearer " + jwt);
-            return ResponseEntity.ok(new JWTTokenDTO(jwt));
+            String token = tokenProvider.createToken(authentication, false);
+            return ResponseEntity.ok(new JWTTokenDTO(token));
         } catch (Exception exception) {
-            return new ResponseEntity<>(Collections.singletonMap("AuthenticationException", exception.getLocalizedMessage()), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(Collections.singletonMap("Exception", exception.getLocalizedMessage()), HttpStatus.UNAUTHORIZED);
         }
 
     }
@@ -76,7 +71,7 @@ public class AuthenticationController {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<?> register(@RequestBody RegisterDTO registerDTO,HttpServletResponse response) {
+    public ResponseEntity<?> register(@RequestBody RegisterDTO registerDTO) {
 
 
         try {
@@ -90,11 +85,10 @@ public class AuthenticationController {
                     )
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            String jwt = tokenProvider.createToken(authentication, false);
-            response.addHeader(JWTConfigurer.AUTHORIZATION_HEADER, "Bearer " + jwt);
-            return ResponseEntity.ok(new JWTTokenDTO(jwt));
+            String token = tokenProvider.createToken(authentication, false);
+            return ResponseEntity.ok(new JWTTokenDTO(token));
         } catch (Exception exception) {
-            return new ResponseEntity<>(Collections.singletonMap("AuthenticationException", exception.getLocalizedMessage()), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(Collections.singletonMap("Exception", exception.getLocalizedMessage()), HttpStatus.UNAUTHORIZED);
         }
 
     }

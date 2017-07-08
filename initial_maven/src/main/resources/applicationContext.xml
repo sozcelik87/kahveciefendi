@@ -8,24 +8,17 @@
               http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
               http://www.hazelcast.com/schema/spring http://www.hazelcast.com/schema/spring/hazelcast-spring.xsd">
 	
-	<!-- 
-    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations">
-            <list>
-                <value>classpath:/hazelcast-config.properties</value>
-            </list>
-        </property>
-    </bean>
-	 -->
+	<!-- For hashing and salting user passwords -->
+    <bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 	 
     <hz:hazelcast id="instance">
         <hz:config>
-            <hz:group name="${name}" password="${password}"/>
+            <hz:group name="${hazelcast.name}" password="${hazelcast.password}"/>
             <hz:properties>
                 <hz:property name="hazelcast.merge.first.run.delay.seconds">5</hz:property>
                 <hz:property name="hazelcast.merge.next.run.delay.seconds">5</hz:property>
             </hz:properties>
-            <hz:network port="${defaultPort}" port-auto-increment="true">
+            <hz:network port="${hazelcast.defaultPort}" port-auto-increment="true">
                 <hz:join>
                     <hz:multicast enabled="true"/>
                 </hz:join>
